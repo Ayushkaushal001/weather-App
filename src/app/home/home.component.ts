@@ -43,9 +43,7 @@ export class HomeComponent {
   return days[targetDate.getDay()];
 }
 
-getMonthName(offset: number) {
-  const days = ['jan', 'feb' , 'Mar' , 'Apr','May' ]
-}
+
  kelvinToCelsius(kelvin: number): number {
     return kelvin - 273.15;
   }

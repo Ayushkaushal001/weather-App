@@ -1,0 +1,62 @@
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <div class="container text-center shadow py-5 px-3 custom-container">
+    <div class="mb-2">
+      <h3 class="text-dark text-start fw-bold"><i class="fas fa-cloud" style="margin-right: 20px;"></i>Weather App</h3>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <form class="form mt-3">
+          <div class="form-group row">
+  
+            <div class="col-sm-10">
+              <input type="text" placeholder="Enter the city.." style="background-color: #edf2ff; width: 100%;     padding-top: .75rem;
+    padding-bottom: .75rem; padding-right: 20rem; " id="locationInput" name="location" [(ngModel)]="city" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+  <button type="button" class="fw-bold" (click)="getWeather()" [disabled]="!city" style="margin-left: -10px; padding-top: .7rem; padding-bottom: .7rem; padding-left: 1rem; padding-right: 1rem; background-color: #5c7cfa; color: white; border-radius: 10%; outline: none !important;">Search</button>
+</div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="!weatherData" class="mt-4">
+      <p class="mt-5">Enter a city and click the search button to see the current weather.</p>
+    </div>
+
+  <div class="weather-info mt-4" *ngIf="weatherData">
+  <div class="row">
+    <div class="col-md-5 text-start" style=" text-decoration-color: transparent;">
+      <h2 class = "aa">{{ weatherData.city.name }}</h2>
+      <div class="txt" style="color: #adb5bd;" >
+      <p>{{ getDayName(0) }}, {{ weatherData.list[0].weather[0].description }}</p><p style=" margin-top: -10px" >Humidity: 53%, Wind: 1.7 km/h</p>
+      </div>
+    </div>
+    <div class="col-md-7 text-end">
+      <img id="icon" class="weather-icon" alt="Weather Icon" [src]="getWeatherIconUrl(weatherData.list[0].weather[0].icon)">
+      <p class="temp">{{ kelvinToCelsius(weatherData.list[0].main.temp) | number:'1.0-0' }}°C</p>
+    </div>
+  </div>
+</div>
+
+<div class="cont2 mt-3" style="justify-content: space-between;">
+  <div class="row">
+    <ng-container *ngFor="let day of weatherData.list.slice(1, 8); let i = index">
+      <div class="col-3" style="color: #adb5bd;">
+        <p>{{ getDayName(i + 1) }}</p>
+        <img [src]="getWeatherIconUrl(day.weather[0].icon)" class="weather-icon {{ day.weather[0].icon === 'sun' ? 'sun' : 'cloud' }}" alt="Weather Icon">
+        <p style="color: black;">{{ kelvinToCelsius(day.main.temp) | number:'1.0-0' }}°C</p>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+    <div class="error-message mt-4" *ngIf="errorMessage">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+
